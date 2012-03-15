@@ -1,5 +1,29 @@
 require "dependancy/version"
 
 module Dependancy
-  # Your code goes here...
+ def self.included(base)
+    base.extend ClassMethods
+  end
+
+  module ClassMethods
+    def _dependancies
+      @_dependancies || []
+    end
+
+    def dependancy(name, &block)
+      @_dependancies ||= []
+      @_dependancies << name
+
+      unless block_given?
+        attr_accessor name
+
+      else
+        attr_writer name
+
+        define_method name do
+          yield self
+        end
+      end
+    end
+  end # module ClassMethods
 end

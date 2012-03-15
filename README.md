@@ -1,6 +1,6 @@
 # Dependancy
 
-TODO: Write a gem description
+Getters & setters for dependency injection
 
 ## Installation
 
@@ -18,7 +18,38 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+class Bar
+  attr_accessor :name
+end
+
+class Foo
+  include Dependancy
+
+  def name
+    'foo name'
+  end
+
+  dependancy :bar1 do
+    Bar.new
+  end
+
+  dependancy :bar2 do |foo|
+    bar = Bar.new
+    bar.name = foo.name
+    bar
+  end
+
+  dependancy :bar3
+end
+
+Foo._dependancies == [:bar1, :bar2, :bar3] # true
+foo = Foo.new
+foo.bar1.is_a? Bar # true
+foo.bar2.is_a? Bar # true
+foo.bar2.name == foo.name # true
+
+```
 
 ## Contributing
 
