@@ -51,6 +51,9 @@ foo.bar2.name == foo.name # true
 
 ```
 
+Tested in ruby 1.9.2
+[![Build Status](https://secure.travis-ci.org/Aaron2Ti/dependancy.png)](http://travis-ci.org/Aaron2Ti/dependancy)
+
 ## Contributing
 
 1. Fork it
