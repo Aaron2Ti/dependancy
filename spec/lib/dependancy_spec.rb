@@ -32,7 +32,11 @@ describe Dependancy do
       Bar.new
     end
 
-    dependancy :bar5
+    private_dependancy :bar5 do
+      Bar.new
+    end
+
+    dependancy :bar6
 
     def self.counter
       @count ||= 0
@@ -44,23 +48,22 @@ describe Dependancy do
     end
   end
 
+  let(:foo) { Foo.new }
+
   it '._dependancies' do
-    Foo._dependancies.should have(5).items
+    Foo._dependancies.should have(6).items
   end
 
   it 'dependancy have default value' do
-    foo = Foo.new
     foo.bar1.should be_a Bar
   end
 
   it 'dependancy could access current object' do
-    foo = Foo.new
     bar = foo.bar2
     bar.name.should == 'foo name'
   end
 
   it 'assign a new dependancy' do
-    foo = Foo.new
     old_bar = foo.bar1
     foo.bar1 = Bar.new
 
@@ -68,12 +71,10 @@ describe Dependancy do
   end
 
   it 'have nil value if there is error' do
-    foo = Foo.new
     foo.bar3.should be_nil
   end
 
   it 'only eval dependancy block once' do
-    foo = Foo.new
     foo.bar4
     foo.bar4.should be_a Bar
 
@@ -81,5 +82,10 @@ describe Dependancy do
     foo.bar4.should == 'stub'
 
     Foo.count.should == 1
+  end
+
+  it '.private_dependancy' do
+    expect { foo.bar5 }.to raise_error NoMethodError
+    foo.send(:bar5).should be_a Bar
   end
 end

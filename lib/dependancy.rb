@@ -37,8 +37,15 @@ module Dependancy
 
             val
           end
-        end
+        end # define_method name do
       end
+    end
+
+    def private_dependancy(name, &block)
+      dependancy name, &block
+
+      private name
+      private "#{name}="
     end
   end # module ClassMethods
 end
