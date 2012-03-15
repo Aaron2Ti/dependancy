@@ -21,7 +21,11 @@ module Dependancy
         attr_writer name
 
         define_method name do
-          yield self
+          begin
+            yield self
+          rescue
+            nil
+          end
         end
       end
     end

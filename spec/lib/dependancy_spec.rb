@@ -23,12 +23,16 @@ describe Dependancy do
       bar
     end
 
-    dependancy :bar3
+    dependancy :bar3 do
+      Blur.new
+    end
+
+    dependancy :bar4
   end
 
   it '._dependancies' do
-    Foo._dependancies.should have(3).items
-    Foo._dependancies.should == [:bar1, :bar2, :bar3]
+    Foo._dependancies.should have(4).items
+    Foo._dependancies.should == [:bar1, :bar2, :bar3, :bar4]
   end
 
   it 'dependancy have default value' do
@@ -48,5 +52,10 @@ describe Dependancy do
     foo.bar1 = Bar.new
 
     foo.bar1.should_not == old_bar
+  end
+
+  it 'have nil value if there is error' do
+    foo = Foo.new
+    foo.bar3.should be_nil
   end
 end
