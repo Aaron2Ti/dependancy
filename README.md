@@ -24,7 +24,7 @@ class Bar
 end
 
 class Foo
-  include Dependancy
+  extend Dependancy
 
   def name
     'foo name'

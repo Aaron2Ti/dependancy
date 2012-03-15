@@ -7,7 +7,7 @@ describe Dependancy do
   end
 
   class Foo
-    include Dependancy
+    extend Dependancy
 
     def name
       'foo name'
