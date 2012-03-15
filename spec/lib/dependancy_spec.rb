@@ -27,12 +27,25 @@ describe Dependancy do
       Blur.new
     end
 
-    dependancy :bar4
+    dependancy :bar4 do
+      counter
+      Bar.new
+    end
+
+    dependancy :bar5
+
+    def self.counter
+      @count ||= 0
+      @count += 1
+    end
+
+    def self.count
+      @count
+    end
   end
 
   it '._dependancies' do
-    Foo._dependancies.should have(4).items
-    Foo._dependancies.should == [:bar1, :bar2, :bar3, :bar4]
+    Foo._dependancies.should have(5).items
   end
 
   it 'dependancy have default value' do
@@ -57,5 +70,16 @@ describe Dependancy do
   it 'have nil value if there is error' do
     foo = Foo.new
     foo.bar3.should be_nil
+  end
+
+  it 'only eval dependancy block once' do
+    foo = Foo.new
+    foo.bar4
+    foo.bar4.should be_a Bar
+
+    foo.bar4 = 'stub'
+    foo.bar4.should == 'stub'
+
+    Foo.count.should == 1
   end
 end

@@ -21,10 +21,21 @@ module Dependancy
         attr_writer name
 
         define_method name do
-          begin
-            yield self
-          rescue
-            nil
+          var_name = "@#{name}"
+
+          if instance_variable_defined?(var_name)
+            instance_variable_get(var_name)
+
+          else
+            val = begin
+                    yield self
+                  rescue
+                    nil
+                  end
+
+            instance_variable_set var_name, val
+
+            val
           end
         end
       end
