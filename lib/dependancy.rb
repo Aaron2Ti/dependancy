@@ -1,6 +1,10 @@
-require "dependancy/version"
+require 'dependancy/version'
 
 module Dependancy
+  autoload :Bild, 'dependancy/bild'
+
+  include Bild::ClassMethods
+
   def _dependancies
     @_dependancies || []
   end

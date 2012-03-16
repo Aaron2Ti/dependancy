@@ -49,6 +49,12 @@ foo.bar1.is_a? Bar # true
 foo.bar2.is_a? Bar # true
 foo.bar2.name == foo.name # true
 
+bar = Bar.new
+foo = Foo.bild bar: bar
+foo.bar == bar # true
+
+foo = Dependancy::Bild.bild Foo, bar: bar
+foo.bar == bar # true
 ```
 
 Tested in ruby 1.9.2
